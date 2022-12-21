@@ -36,12 +36,12 @@ function App() {
     const res = await models();
     setSuggestion(res[0]?.text);
   };
-  
 
   return (
     <div className="App">
       <h1>
-        GPT-3 Completion App that uses the "text-davinci-003" model from OpenAI
+        <span>GPT-3 Completion App that uses the</span> <br />{' '}
+        <span>"text-davinci-003" model from OpenAI</span>
       </h1>
       <form onSubmit={(e) => e.preventDefault()}>
         <label htmlFor="input-completion">
