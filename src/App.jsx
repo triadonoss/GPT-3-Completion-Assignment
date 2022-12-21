@@ -36,6 +36,7 @@ function App() {
     const res = await models();
     setSuggestion(res[0]?.text);
   };
+  
 
   return (
     <div className="App">
