@@ -6,7 +6,7 @@ function App() {
   const [suggestion, setSuggestion] = useState('');
 
   const models = async () => {
-    const list = await fetch('http://localhost:3500/', {
+    const list = await fetch('https://nice-erin-basket-clam-tie.cyclic.app/', {
       method: 'POST',
       headers: {
         Accept: '*/*',
@@ -22,23 +22,21 @@ function App() {
   };
   const handleChange = (value) => {
     setPrompts(value);
+    setSuggestion('');
   };
   const handleClick = async () => {
-    //const res = await models();
-    //console.log(res);
-    //setSuggestion(res[0]?.text);
-    //setTimeout(async () => {
-    alert();
     const res = await models();
     setSuggestion(res[0]?.text);
-    //}, 3000);
   };
 
   return (
     <div className="App">
+      <h1>
+        GPT-3 Completion App that uses the "text-davinci-003" model from OpenAI
+      </h1>
       <form onSubmit={(e) => e.preventDefault()}>
         <label htmlFor="input-completion">
-          Type in the box your prompt and get suggestions
+          Type in the box your prompt and get completion text suggestion
         </label>
         <br />
         <input
@@ -54,6 +52,8 @@ function App() {
           {suggestion}
         </div>
         <button onClick={handleClick}>Get Completion Text</button>
+        <br />
+        <small>Implemented by Mondred</small>
       </form>
     </div>
   );
