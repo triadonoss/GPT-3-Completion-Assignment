@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
   const [prompts, setPrompts] = useState('');
   const [suggestion, setSuggestion] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const models = async () => {
+    setIsLoading(true);
     const list = await fetch('https://nice-erin-basket-clam-tie.cyclic.app/', {
       method: 'POST',
       headers: {
@@ -20,6 +22,12 @@ function App() {
 
     return list.json();
   };
+
+  useEffect(() => {
+    if (suggestion) {
+      setIsLoading(false);
+    }
+  }, [suggestion]);
   const handleChange = (value) => {
     setPrompts(value);
     setSuggestion('');
@@ -28,6 +36,7 @@ function App() {
     const res = await models();
     setSuggestion(res[0]?.text);
   };
+  
 
   return (
     <div className="App">
@@ -48,7 +57,8 @@ function App() {
         />
         <br />
         <div>
-          {!suggestion && <p>...</p>}
+          {!suggestion && !isLoading && <p>...</p>}
+          {isLoading && <p>loading</p>}
           {suggestion}
         </div>
         <button onClick={handleClick}>Get Completion Text</button>
