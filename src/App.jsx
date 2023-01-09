@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
   const [prompts, setPrompts] = useState('');
   const [suggestion, setSuggestion] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const models = async () => {
-    const list = await fetch('https://openai-node-backend.onrender.com', {
+    setIsLoading(true);
+    const list = await fetch('https://nice-erin-basket-clam-tie.cyclic.app/', {
       method: 'POST',
       headers: {
         Accept: '*/*',
@@ -20,6 +22,12 @@ function App() {
 
     return list.json();
   };
+
+  useEffect(() => {
+    if (suggestion) {
+      setIsLoading(false);
+    }
+  }, [suggestion]);
   const handleChange = (value) => {
     setPrompts(value);
     setSuggestion('');
@@ -32,7 +40,8 @@ function App() {
   return (
     <div className="App">
       <h1>
-        GPT-3 Completion App that uses the "text-davinci-003" model from OpenAI
+        <span>GPT-3 Completion App that uses the</span> <br />{' '}
+        <span>"text-davinci-003" model from OpenAI</span>
       </h1>
       <form onSubmit={(e) => e.preventDefault()}>
         <label htmlFor="input-completion">
@@ -48,7 +57,8 @@ function App() {
         />
         <br />
         <div>
-          {!suggestion && <p>...</p>}
+          {!suggestion && !isLoading && <p>...</p>}
+          {isLoading && <p>loading</p>}
           {suggestion}
         </div>
         <button onClick={handleClick}>Get Completion Text</button>
