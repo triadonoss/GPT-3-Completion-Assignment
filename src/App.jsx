@@ -8,7 +8,7 @@ function App() {
 
   const models = async () => {
     setIsLoading(true);
-    const list = await fetch('https://nice-erin-basket-clam-tie.cyclic.app/', {
+    const list = await fetch('https://openai-node-backend.onrender.com', {
       method: 'POST',
       headers: {
         Accept: '*/*',
